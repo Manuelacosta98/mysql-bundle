@@ -1,8 +1,7 @@
-# DriftPHP - Redis adapter
+# DriftPHP - Mysql adapter
 
-[![CircleCI](https://circleci.com/gh/driftphp/redis-bundle.svg?style=svg)](https://circleci.com/gh/driftphp/redis-bundle)
 
-This is a simple adapter for Redis on top of ReactPHP and DriftPHP. Following
+This is a simple adapter for Mysql on top of ReactPHP and DriftPHP. Following
 the same structure that is followed in the Symfony ecosystem, you can use this
 package as a Bundle, only usable under DriftPHP Framework.
 
@@ -11,31 +10,27 @@ package as a Bundle, only usable under DriftPHP Framework.
 You can install the package by using composer
 
 ```bash
-composer require drift/redis-bundle
+composer require drift/mysql-bundle
 ```
 
 ## Configure
 
-This package will allow you to configure all your Redis async clients, taking
+This package will allow you to configure all your Mysql async clients, taking
 care of duplicity and the loop integration. Once your package is required by
 composer, add the bundle in the kernel and change your `services.yaml`
 configuration file to defined the clients
 
 ```yaml
-redis:
+mysql:
     clients:
         users:
-            host: "127.0.0.1"
-            port: 6379
+            host: "localhost"
+            port: 3306
             database: "/users"
+            username: "root"
             password: "secret"
-            protocol: "rediss://"
-            idle: 0.5
-            timeout: 10.0
-
         
         orders:
-            host: "127.0.0.1"
             database: "/orders"
 ```
 
@@ -50,8 +45,8 @@ using the name of the client in your dependency injection arguments array
 a_service:
     class: My\Service
     arguments:
-        - "@redis.users_client"
-        - "@redis.orders_client"
+        - "@mysql.users_client"
+        - "@mysql.orders_client"
 ```
 
 You can use Autowiring as well in the bundle, by using the name of the client
