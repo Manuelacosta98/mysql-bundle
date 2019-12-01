@@ -10,7 +10,7 @@ package as a Bundle, only usable under DriftPHP Framework.
 You can install the package by using composer
 
 ```bash
-composer require drift/mysql-bundle
+composer require manuelacosta98/mysql-bundle:dev-master
 ```
 
 ## Configure
