@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use React\MySQL\Factory;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use React\MySQL\ConnectionInterface as Client;
 
 /**
  * Class MysqlCompilerPass
@@ -33,7 +34,13 @@ class MysqlCompilerPass implements CompilerPassInterface
                 $clientAlias
             );
 
-            $container->registerAliasForArgument($clientAlias, "{$clientName} client");
+            $container->setAlias(
+                Client::class,
+                $clientAlias
+            );
+
+
+            $container->registerAliasForArgument($clientAlias,Client::class, "{$clientName} client");
         }
     }
 
@@ -70,7 +77,7 @@ class MysqlCompilerPass implements CompilerPassInterface
         $definitionName = "mysql.client.$clientHash";
         if (!$container->hasDefinition($definitionName)) {
             $definition = new Definition(
-                Factory::class,
+                Client::class,
                 [
                     MysqlUrlBuilder::buildUrlByConfiguration($configuration)
                 ]
